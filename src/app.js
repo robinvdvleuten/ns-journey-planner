@@ -2,9 +2,10 @@
 import { Global, css, jsx } from '@emotion/core'
 import { normalize } from "polished"
 import { Box, Flex } from "@rebass/emotion"
-import Bubble from "./components/bubble"
-import Chat from "./components/chat"
+import { Provider } from 'unistore/react'
 import Input from "./components/input"
+import Chat from "./containers/chat"
+import store from "./store"
 
 const globalStyles = css`
   body {
@@ -22,24 +23,16 @@ const globalStyles = css`
 `
 
 const Application = () => (
-  <Flex alignItems="center" flexDirection="column" mt={4}>
-    <Global styles={normalize()} />
-    <Global styles={globalStyles} />
-    <Box width="24rem">
-      <Chat mb={4}>
-        <Bubble>
-          Hey!
-        </Bubble>
-        <Bubble>
-          Can I have a banana?
-        </Bubble>
-        <Bubble reply>
-          🍌
-        </Bubble>
-      </Chat>
-      <Input />
-    </Box>
-  </Flex>
+  <Provider store={store}>
+    <Flex alignItems="center" flexDirection="column" mt={4}>
+      <Global styles={normalize()} />
+      <Global styles={globalStyles} />
+      <Box width="24rem">
+        <Chat mb={4} />
+        <Input />
+      </Box>
+    </Flex>
+  </Provider>
 );
 
 export default Application;
