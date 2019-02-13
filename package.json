@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "razzle start",
+    "build": "razzle build",
+    "test": "razzle test --env=jsdom",
+    "start": "NODE_ENV=production node build/server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  },
+  "devDependencies": {
+    "razzle": "^2.4.1"
+  }
+}
