@@ -2,6 +2,12 @@ import got from 'got'
 import nanoid from 'nanoid'
 import { Wit } from 'node-wit'
 import qs from 'query-string'
+import LRU from 'lru-cache'
+
+const cache = new LRU({
+  max: 0,
+  maxAge: 1000 * 60 * 5
+})
 
 async function computeJourney(trip) {
   return trip.legs.map(leg => ({
@@ -15,15 +21,19 @@ async function computeJourney(trip) {
 }
 
 function extractValueFromEntity(entity) {
-  return entity && entity[0] && entity[0].value
+  // We lowercase the extracted value to have a better cache HIT ratio.
+  return entity && entity[0] && entity[0].value.toLowerCase()
 }
 
 async function queryTrips(fromStation, toStation, viaStation) {
-  const url = `https://ns-api.nl/reisinfo/api/v3/trips?${qs.stringify({
-    fromStation,
-    toStation,
-    viaStation
-  })}`
+  const query = qs.stringify({ fromStation, toStation, viaStation })
+  const url = `https://ns-api.nl/reisinfo/api/v3/trips?${query}`
+
+  if (cache.has(query)) {
+    console.log('Cache HIT for NS API:', url)
+    return cache.get(query)
+  }
+
   console.log('Querying NS API:', url)
 
   const response = await got(url, {
@@ -35,6 +45,8 @@ async function queryTrips(fromStation, toStation, viaStation) {
 
   const result = JSON.parse(response.body)
   console.log(`Received ${result.trips.length + 1} trip(s) from NS API`)
+
+  cache.set(query, result.trips)
 
   return result.trips
 }
@@ -76,7 +88,7 @@ export default io => {
         const journey = await computeJourney(trips.shift())
         message(journey, true)
       } catch (err) {
-        console.error(err)
+        console.error(err.response.body)
         message('Er ging iets mis 😢')
         return
       }
