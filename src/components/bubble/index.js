@@ -13,6 +13,7 @@ const bubbleStyles = css`
 const replyStyles = css`
   align-self: flex-end;
   background: #2c2c2c;
+  color: #fff;
   border-radius: 5px 15px 15px 15px;
   border-radius: 1em 1em 0.25em 1em;
 `

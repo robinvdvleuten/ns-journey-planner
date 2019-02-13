@@ -3,8 +3,8 @@ import { Global, css, jsx } from '@emotion/core'
 import { normalize } from "polished"
 import { Box, Flex } from "@rebass/emotion"
 import { Provider } from 'unistore/react'
-import Input from "./components/input"
 import Chat from "./containers/chat"
+import Input from "./containers/input"
 import store from "./store"
 
 const globalStyles = css`
