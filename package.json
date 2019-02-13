@@ -34,6 +34,7 @@
     "babel-plugin-date-fns": "^0.2.1",
     "babel-plugin-polished": "^1.1.0",
     "prettier": "1.16.4",
-    "razzle": "^2.4.1"
+    "razzle": "^2.4.1",
+    "strip-loader": "^0.1.2"
   }
 }
