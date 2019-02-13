@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { Fragment } from 'react'
 import { css, jsx } from '@emotion/core'
-import { Box, Flex } from "@rebass/emotion"
+import { Flex } from "@rebass/emotion"
 import { format } from 'date-fns'
 import Bubble from "../../components/bubble"
 

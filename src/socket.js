@@ -1,5 +1,6 @@
 import got from "got"
 import nanoid from "nanoid"
+import {Wit} from 'node-wit'
 
 async function computeJourney(trip) {
   return trip.legs.map(leg => ({
@@ -10,6 +11,10 @@ async function computeJourney(trip) {
     departure: leg.origin.plannedDateTime,
     arrival: leg.destination.plannedDateTime
   }))
+}
+
+function extractValueFromEntity (entity) {
+  return entity[0].value
 }
 
 async function queryTrips(fromStation, toStation) {
@@ -27,22 +32,26 @@ async function queryTrips(fromStation, toStation) {
 }
 
 export default io => {
+  const wit = new Wit({ accessToken: process.env.RAZZLE_WIT_ACCESS_TOKEN })
+
   io.on('connection', socket => {
     const message = (body, journey = false) => socket.emit('message', { id: nanoid(), body, journey })
 
     socket.on('reply', async ({ body }) => {
-      let matches
+      const { entities } = await wit.message(body, {})
 
-      if (!(matches = body.match(/Ik wil van ([a-zA-Z\s]+) naar ([a-zA-Z\s]+)/))) {
+      if (!entities.fromStation || !entities.toStation) {
         message('Dat begreep ik niet helemaal 🤔')
         return
       }
 
-      const [, fromStation, toStation] = matches
       message('Je route wordt berekend, een moment geduld 😅')
 
       try {
-        const trips = await queryTrips(fromStation, toStation)
+        const trips = await queryTrips(
+          extractValueFromEntity(entities.fromStation),
+          extractValueFromEntity(entities.toStation)
+        )
 
         if (trips.length === 0) {
           message('Je geplande reis is helaas niet mogelijk 😞')

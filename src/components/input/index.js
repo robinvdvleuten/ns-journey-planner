@@ -12,7 +12,7 @@ const inputStyles = css`
 `
 
 const Input = ({ children, disabled, onMessage, ...props }) => (
-  <Formik initialValues={{ message: "Ik wil van Aml naar Bgn" }} onSubmit={async (values, actions) => {
+  <Formik initialValues={{ message: "" }} onSubmit={async (values, actions) => {
     await onMessage(values.message)
     actions.setValues({ message: "" })
     actions.setSubmitting(false)
