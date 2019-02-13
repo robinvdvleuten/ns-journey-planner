@@ -42,6 +42,11 @@ export default io => {
       socket.emit('message', { id: nanoid(), body, journey })
 
     socket.on('reply', async ({ body }) => {
+      if (body.length < 3) {
+        message('Dat begreep ik niet helemaal 🤔')
+        return
+      }
+
       const { entities } = await wit.message(body, {})
 
       if (!entities.fromStation || !entities.toStation) {
