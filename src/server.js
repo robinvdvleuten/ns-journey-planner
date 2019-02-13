@@ -1,5 +1,6 @@
 import React from 'react'
 import express from 'express'
+import compression from 'compression'
 import { renderToString } from 'react-dom/server'
 import Application from './app'
 
@@ -8,6 +9,7 @@ const server = express()
 
 server
   .disable('x-powered-by')
+  .use(compression())
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
     const markup = renderToString(<Application />)
