@@ -1,12 +1,15 @@
 /** @jsx jsx */
 import { Global, jsx } from '@emotion/core'
 import { normalize } from "polished"
+import { Box, Flex } from "@rebass/emotion"
 
 const Application = () => (
-  <div>
+  <Flex justifyContent="center" mt={4}>
     <Global styles={normalize()} />
-    Hello, World!
-  </div>
+    <Box>
+      Hello, World!
+    </Box>
+  </Flex>
 );
 
 export default Application;
