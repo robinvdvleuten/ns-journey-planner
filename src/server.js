@@ -1,7 +1,7 @@
 import React from 'react';
 import express from 'express';
-import Application from './app';
 import { renderToString } from 'react-dom/server';
+import Application from './app';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 const server = express();
@@ -15,21 +15,16 @@ server
     res.send(
       // prettier-ignore
       `<!doctype html>
-    <html lang="">
+<html lang="">
     <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charSet='utf-8' />
-        <title>NS Journey Planner 🚂</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        ${
-          assets.client.css
-            ? `<link rel="stylesheet" href="${assets.client.css}">`
-            : ''
-        }
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>NS Journey Planner 🚂</title>
+        <script src="${assets.client.js}" defer crossorigin></script>
     </head>
     <body>
         <div id="root">${markup}</div>
-        <script src="${assets.client.js}" defer crossorigin></script>
     </body>
 </html>`
     );

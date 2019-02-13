@@ -7,11 +7,15 @@
     "start": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.7",
     "express": "^4.16.4",
+    "polished": "^2.3.3",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-plugin-polished": "^1.1.0",
     "razzle": "^2.4.1"
   }
 }
