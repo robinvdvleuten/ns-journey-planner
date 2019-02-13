@@ -3,6 +3,7 @@
     "razzle/babel"
   ],
   "plugins": [
+    "babel-plugin-date-fns",
     "babel-plugin-polished"
   ]
 }
