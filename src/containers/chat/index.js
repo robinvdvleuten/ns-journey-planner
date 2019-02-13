@@ -1,13 +1,23 @@
 import React, { useEffect } from 'react'
 import { connect } from 'unistore/react'
-import Bubble from "../../components/bubble"
+import Bubble from '../../components/bubble'
 import Chat from '../../components/chat'
 import JourneyBubble from '../../components/journey-bubble'
 import actions from '../../actions'
 
-const ChatContainer = ({ messages, socket, connectSocket, receiveMessage, ...props }) => {
-  useEffect(() => { connectSocket() }, [])
-  useEffect(() => { socket && socket.on('message', receiveMessage) }, [socket])
+const ChatContainer = ({
+  messages,
+  socket,
+  connectSocket,
+  receiveMessage,
+  ...props
+}) => {
+  useEffect(() => {
+    connectSocket()
+  }, [])
+  useEffect(() => {
+    socket && socket.on('message', receiveMessage)
+  }, [socket])
 
   return (
     <Chat {...props}>
@@ -26,4 +36,7 @@ const ChatContainer = ({ messages, socket, connectSocket, receiveMessage, ...pro
   )
 }
 
-export default connect('messages, socket', actions)(ChatContainer)
+export default connect(
+  'messages, socket',
+  actions
+)(ChatContainer)

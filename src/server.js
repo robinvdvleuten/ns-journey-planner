@@ -1,16 +1,16 @@
-import React from 'react';
-import express from 'express';
-import { renderToString } from 'react-dom/server';
-import Application from './app';
+import React from 'react'
+import express from 'express'
+import { renderToString } from 'react-dom/server'
+import Application from './app'
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-const server = express();
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
+const server = express()
 
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
-    const markup = renderToString(<Application />);
+    const markup = renderToString(<Application />)
 
     res.send(
       // prettier-ignore
@@ -27,7 +27,7 @@ server
         <div id="root">${markup}</div>
     </body>
 </html>`
-    );
-  });
+    )
+  })
 
-export default server;
+export default server

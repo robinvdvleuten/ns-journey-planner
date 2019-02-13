@@ -1,9 +1,9 @@
-import React from 'react';
-import { hydrate } from 'react-dom';
-import Application from './app';
+import React from 'react'
+import { hydrate } from 'react-dom'
+import Application from './app'
 
-hydrate(<Application />, window.root);
+hydrate(<Application />, window.root)
 
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept()
 }

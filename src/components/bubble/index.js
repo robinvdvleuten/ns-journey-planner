@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import { Box } from "@rebass/emotion"
+import { Box } from '@rebass/emotion'
 
 const bubbleStyles = css`
   background: #fff;

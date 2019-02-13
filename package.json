@@ -6,6 +6,10 @@
     "test": "razzle test --env=jsdom",
     "start": "NODE_ENV=production node build/server.js"
   },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
@@ -26,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "babel-plugin-polished": "^1.1.0",
+    "prettier": "1.16.4",
     "razzle": "^2.4.1"
   }
 }

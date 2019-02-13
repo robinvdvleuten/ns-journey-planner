@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import { Box } from "@rebass/emotion"
-import { Formik } from 'formik';
+import { Box } from '@rebass/emotion'
+import { Formik } from 'formik'
 
 const inputStyles = css`
   border: none;
@@ -12,15 +12,26 @@ const inputStyles = css`
 `
 
 const Input = ({ children, disabled, onMessage, ...props }) => (
-  <Formik initialValues={{ message: "" }} onSubmit={async (values, actions) => {
-    await onMessage(values.message)
-    actions.setValues({ message: "" })
-    actions.setSubmitting(false)
-  }}>
+  <Formik
+    initialValues={{ message: '' }}
+    onSubmit={async (values, actions) => {
+      await onMessage(values.message)
+      actions.setValues({ message: '' })
+      actions.setSubmitting(false)
+    }}
+  >
     {({ values, isSubmitting, handleBlur, handleChange, handleSubmit }) => (
       <Box {...props}>
         <form onSubmit={handleSubmit}>
-          <input name="message" value={values.message} disabled={disabled || isSubmitting} css={inputStyles} onBlur={handleBlur} onChange={handleChange} autoFocus />
+          <input
+            name="message"
+            value={values.message}
+            disabled={disabled || isSubmitting}
+            css={inputStyles}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            autoFocus
+          />
         </form>
       </Box>
     )}

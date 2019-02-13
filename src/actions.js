@@ -1,8 +1,8 @@
 import io from 'socket.io-client'
-import nanoid from "nanoid"
+import nanoid from 'nanoid'
 
 const actions = store => ({
-  connectSocket (state) {
+  connectSocket(state) {
     return { ...state, socket: io() }
   },
 
@@ -10,11 +10,11 @@ const actions = store => ({
     const message = { id: nanoid(), body, reply: true }
     state.socket.emit('reply', message)
 
-    return { ...state, messages: [ ...state.messages, message ] }
+    return { ...state, messages: [...state.messages, message] }
   },
 
-  receiveMessage (state, message) {
-    return { ...state, messages: [ ...state.messages, message ] }
+  receiveMessage(state, message) {
+    return { ...state, messages: [...state.messages, message] }
   }
 })
 

@@ -8,4 +8,6 @@ const store = createStore({
   socket: null
 })
 
-export default typeof window === 'undefined' || NODE_ENV === 'production' ? store : devtools(store)
+export default (typeof window === 'undefined' || NODE_ENV === 'production'
+  ? store
+  : devtools(store))
