@@ -1,6 +1,7 @@
 import got from 'got'
 import nanoid from 'nanoid'
 import { Wit } from 'node-wit'
+import qs from 'query-string'
 
 async function computeJourney(trip) {
   return trip.legs.map(leg => ({
@@ -14,19 +15,23 @@ async function computeJourney(trip) {
 }
 
 function extractValueFromEntity(entity) {
-  return entity[0].value
+  return entity && entity[0] && entity[0].value
 }
 
-async function queryTrips(fromStation, toStation) {
-  const response = await got(
-    `https://ns-api.nl/reisinfo/api/v3/trips?fromStation=${fromStation}&toStation=${toStation}`,
-    {
-      responseType: 'json',
-      headers: {
-        'x-api-key': process.env.RAZZLE_NS_API_TOKEN
-      }
+async function queryTrips(fromStation, toStation, viaStation) {
+  const url = `https://ns-api.nl/reisinfo/api/v3/trips?${qs.stringify({
+    fromStation,
+    toStation,
+    viaStation
+  })}`
+  console.log('Querying NS API:', url)
+
+  const response = await got(url, {
+    responseType: 'json',
+    headers: {
+      'x-api-key': process.env.RAZZLE_NS_API_TOKEN
     }
-  )
+  })
 
   const result = JSON.parse(response.body)
   console.log(`Received ${result.trips.length + 1} trip(s) from NS API`)
@@ -59,7 +64,8 @@ export default io => {
       try {
         const trips = await queryTrips(
           extractValueFromEntity(entities.fromStation),
-          extractValueFromEntity(entities.toStation)
+          extractValueFromEntity(entities.toStation),
+          extractValueFromEntity(entities.viaStation)
         )
 
         if (trips.length === 0) {
